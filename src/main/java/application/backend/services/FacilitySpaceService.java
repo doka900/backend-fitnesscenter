@@ -4,19 +4,18 @@ import application.backend.models.DTO.FacilityDTO;
 import application.backend.models.DTO.FacilitySpaceDTO;
 import application.backend.models.entities.Facility;
 import application.backend.models.entities.FacilitySpace;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-public interface FacilityService {
+public interface FacilitySpaceService {
 
-    public List<Facility> findAllFacilities();
+    public FacilitySpace createFacilitySpace(FacilitySpaceDTO facilitySpaceDTO);
 
-    public Facility createFacility(FacilityDTO facilityDTO);
+    public FacilitySpace updateFacilitySpace(FacilitySpaceDTO facilitySpaceDTO);
 
-    public Facility updateFacility(FacilityDTO facilityDTO);
-
-    public Facility findFacilityById(long id);
+    public FacilitySpace findFacilitySpaceById(long id);
 
     public void deleteFacilityById(long id);
+
+    public List<FacilitySpace> findByFacilityId(Long facilityId);
 }

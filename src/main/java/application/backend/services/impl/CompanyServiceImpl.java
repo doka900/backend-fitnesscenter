@@ -5,11 +5,12 @@ import application.backend.models.entities.Company;
 import application.backend.repositories.CompanyRepository;
 import application.backend.services.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-
+@Service
 public class CompanyServiceImpl implements CompanyService {
 
-
+    @Autowired
     private CompanyRepository companyRepository;
 
     @Override

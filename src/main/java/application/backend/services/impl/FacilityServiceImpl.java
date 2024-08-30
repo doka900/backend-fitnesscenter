@@ -1,16 +1,20 @@
 package application.backend.services.impl;
 
 import application.backend.models.DTO.FacilityDTO;
+import application.backend.models.DTO.FacilitySpaceDTO;
 import application.backend.models.entities.Facility;
+import application.backend.models.entities.FacilitySpace;
 import application.backend.repositories.FacilityRepository;
 import application.backend.services.FacilityService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class FacilityServiceImpl implements FacilityService {
 
-
+    @Autowired
     private FacilityRepository facilityRepository;
 
     @Override
@@ -92,6 +96,7 @@ public class FacilityServiceImpl implements FacilityService {
 
     @Override
     public void deleteFacilityById(long id) {
-         facilityRepository.deleteById(id);
+        facilityRepository.deleteById(id);
     }
+
 }

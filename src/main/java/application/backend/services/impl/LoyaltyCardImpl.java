@@ -4,9 +4,12 @@ import application.backend.models.DTO.LoyaltyCardDTO;
 import application.backend.models.entities.LoyaltyCard;
 import application.backend.repositories.LoyaltyCardRepository;
 import application.backend.services.LoyaltyCardService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class LoyaltyCardImpl implements LoyaltyCardService {
-
+    @Autowired
     private LoyaltyCardRepository loyaltyCardRepository;
 
     public LoyaltyCard findById(LoyaltyCardDTO loyaltyCardDTO) {

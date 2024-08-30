@@ -2,12 +2,15 @@ package application.backend.models.entities;
 
 import application.backend.models.enums.FacilityType;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -51,5 +54,7 @@ public class Facility {
     @Column(name = "facility_type")
     private FacilityType facilityType;
 
-
+    @JsonManagedReference
+    @OneToMany(mappedBy = "facility")
+    private Set<FacilitySpace> facilitySpaces;
 }

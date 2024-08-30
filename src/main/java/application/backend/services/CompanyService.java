@@ -2,6 +2,7 @@ package application.backend.services;
 
 import application.backend.models.DTO.CompanyDTO;
 import application.backend.models.entities.Company;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
