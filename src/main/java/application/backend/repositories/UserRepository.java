@@ -7,6 +7,8 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import application.backend.models.entities.User;
 
+import java.time.LocalDate;
+
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
@@ -20,7 +22,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Modifying
     @Transactional
-    @Query(value = "update users u set u.email = ?1, u.description = ?2, u.display_name = ?3, u.profile_image = ?4 where u.id = ?5", nativeQuery = true)
-    void updateUser(String email, String description, String display_name, byte[] profile_image, long id);
+    @Query(value = "update users u set u.email = ?1, u.date_of_birth = ?2, u.name = ?3 , u.surname = ?4 ,u.description = ?5, u.display_name = ?6, u.profile_image = ?7 where u.id = ?8", nativeQuery = true)
+    void updateUser(String email, LocalDate dateOfBirth, String name, String surname ,String description, String display_name, byte[] profile_image, long id);
 
 }

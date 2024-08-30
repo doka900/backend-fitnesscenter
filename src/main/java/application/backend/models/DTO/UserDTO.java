@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -19,6 +21,14 @@ public class UserDTO {
     private String password;
 
     private String email;
+
+    private LocalDate dateOfBirth;
+
+    private String name;
+
+    private String surname;
+
+    private LocalDate registrationDate;
 
     private String description;
 

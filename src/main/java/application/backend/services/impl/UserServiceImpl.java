@@ -2,8 +2,10 @@ package application.backend.services.impl;
 
 
 import application.backend.models.DTO.UserDTO;
+import application.backend.models.entities.LoyaltyCard;
 import application.backend.models.entities.User;
 import application.backend.models.enums.Roles;
+import application.backend.repositories.LoyaltyCardRepository;
 import application.backend.repositories.UserRepository;
 import application.backend.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,8 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private LoyaltyCardRepository loyaltyCardRepository;
 
     @Override
     public List<User> findAllUsers() {
@@ -32,18 +36,25 @@ public class UserServiceImpl implements UserService {
     public User createUser(UserDTO userDTO) {
 
         User user = new User();
+        LoyaltyCard loyaltyCard = new LoyaltyCard();
+        loyaltyCard.setDiscount(false);
+        loyaltyCard.setPoints(0);
 
         user.setUsername(userDTO.getUsername());
         user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         user.setEmail(userDTO.getEmail());
+        user.setDateOfBirth(userDTO.getDateOfBirth());
+        user.setName(userDTO.getName());
+        user.setSurname(userDTO.getSurname());
         user.setRegistrationDate(LocalDate.now());
         user.setDescription(userDTO.getDescription());
         user.setDisplayName(userDTO.getDisplay_name());
         user.setProfileImage(userDTO.getProfileImage());
         user.setRole(Roles.USER);
+        user.setLoyaltyCard(loyaltyCard);
 
         userRepository.save(user);
-
+        loyaltyCardRepository.save(loyaltyCard);
         return user;
     }
 
@@ -55,6 +66,16 @@ public class UserServiceImpl implements UserService {
 
         if (updateUserDTO.getEmail() != null) {
             updatedUser.setEmail(updateUserDTO.getEmail());
+        }
+
+        if (updateUserDTO.getDateOfBirth() != null) {
+            updatedUser.setDateOfBirth(updateUserDTO.getDateOfBirth());
+        }
+        if (updateUserDTO.getName() != null) {
+            updatedUser.setName(updateUserDTO.getName());
+        }
+        if (updateUserDTO.getSurname() != null) {
+            updatedUser.setSurname(updateUserDTO.getSurname());
         }
 
         if (updateUserDTO.getDescription() != null) {
@@ -69,13 +90,7 @@ public class UserServiceImpl implements UserService {
             updatedUser.setProfileImage(updateUserDTO.getProfileImage());
         }
 
-        userRepository.updateUser(
-                updatedUser.getEmail(),
-                updatedUser.getDescription(),
-                updatedUser.getDisplayName(),
-                updatedUser.getProfileImage(),
-                updatedUser.getId()
-        );
+        userRepository.updateUser(updatedUser.getEmail(), updatedUser.getDateOfBirth(), updatedUser.getName(), updatedUser.getSurname(), updatedUser.getDescription(), updatedUser.getDisplayName(), updatedUser.getProfileImage(), updatedUser.getId());
 
         return updatedUser;
     }
