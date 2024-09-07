@@ -3,6 +3,7 @@ package application.backend.services.impl;
 
 import application.backend.models.DTO.UserDTO;
 import application.backend.models.entities.LoyaltyCard;
+import application.backend.models.entities.Program;
 import application.backend.models.entities.User;
 import application.backend.models.enums.Roles;
 import application.backend.repositories.LoyaltyCardRepository;
@@ -130,5 +131,6 @@ public class UserServiceImpl implements UserService {
     public User findUserByUsername(String username) {
         return userRepository.findByUsername(username);
     }
+
 
 }

@@ -2,6 +2,7 @@ package application.backend.services;
 
 import java.util.List;
 import application.backend.models.DTO.UserDTO;
+import application.backend.models.entities.Program;
 import application.backend.models.entities.User;
 
 public interface UserService {
