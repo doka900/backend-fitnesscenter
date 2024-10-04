@@ -13,4 +13,7 @@ public interface ScheduleService {
     public Schedule updateSchedule(ScheduleDTO scheduleDTO);
     public void deleteSchedule(Long id);
 
+    public Schedule findSheduleByProgramId(Long id);
+
+    void deleteById(Long id);
 }

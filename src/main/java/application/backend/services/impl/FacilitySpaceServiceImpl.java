@@ -50,17 +50,22 @@ public class FacilitySpaceServiceImpl implements FacilitySpaceService {
     }
 
     @Override
-    public FacilitySpace findFacilitySpaceById(long id) {
+    public FacilitySpace findFacilitySpaceById(Long id) {
         return facilitySpaceRepository.findById(id).orElse(null);
     }
 
     @Override
-    public void deleteFacilityById(long id) {
+    public void deleteFacilityById(Long id) {
         facilitySpaceRepository.deleteById(id);
     }
 
     @Override
     public List<FacilitySpace> findByFacilityId(Long facilityId) {
         return facilitySpaceRepository.findByFacilityId(facilityId);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        facilitySpaceRepository.deleteById(id);
     }
 }

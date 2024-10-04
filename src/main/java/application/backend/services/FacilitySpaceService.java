@@ -13,9 +13,11 @@ public interface FacilitySpaceService {
 
     public FacilitySpace updateFacilitySpace(FacilitySpaceDTO facilitySpaceDTO);
 
-    public FacilitySpace findFacilitySpaceById(long id);
+    public FacilitySpace findFacilitySpaceById(Long id);
 
-    public void deleteFacilityById(long id);
+    public void deleteFacilityById(Long id);
 
     public List<FacilitySpace> findByFacilityId(Long facilityId);
+
+    public  void deleteById(Long id);
 }

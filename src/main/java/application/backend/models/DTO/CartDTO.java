@@ -14,5 +14,6 @@ public class CartDTO {
 
     private Long id;
     private User user;
+    private Float price;
 
 }

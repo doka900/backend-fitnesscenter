@@ -30,7 +30,7 @@ public class CartServiceImpl implements CartService {
         Cart cart = new Cart();
         cart.setUser(cartDTO.getUser());
         cart.setPrograms(cartDTO.getUser().getPrograms());
-
+        cart.setPrice(0);
         cartRepository.save(cart);
 
         return cart;

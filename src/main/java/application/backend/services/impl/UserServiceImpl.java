@@ -2,10 +2,12 @@ package application.backend.services.impl;
 
 
 import application.backend.models.DTO.UserDTO;
+import application.backend.models.entities.Cart;
 import application.backend.models.entities.LoyaltyCard;
 import application.backend.models.entities.Program;
 import application.backend.models.entities.User;
 import application.backend.models.enums.Roles;
+import application.backend.repositories.CartRepository;
 import application.backend.repositories.LoyaltyCardRepository;
 import application.backend.repositories.UserRepository;
 import application.backend.services.UserService;
@@ -27,6 +29,8 @@ public class UserServiceImpl implements UserService {
     private PasswordEncoder passwordEncoder;
     @Autowired
     private LoyaltyCardRepository loyaltyCardRepository;
+    @Autowired
+    private CartRepository cartRepository;
 
     @Override
     public List<User> findAllUsers() {
@@ -40,6 +44,7 @@ public class UserServiceImpl implements UserService {
         LoyaltyCard loyaltyCard = new LoyaltyCard();
         loyaltyCard.setDiscount(false);
         loyaltyCard.setPoints(0);
+        Cart cart = new Cart();
 
         user.setUsername(userDTO.getUsername());
         user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
@@ -53,9 +58,11 @@ public class UserServiceImpl implements UserService {
         user.setProfileImage(userDTO.getProfileImage());
         user.setRole(Roles.USER);
         user.setLoyaltyCard(loyaltyCard);
-
+        user.setCart(cart);
         userRepository.save(user);
         loyaltyCardRepository.save(loyaltyCard);
+        cartRepository.save(cart);
+
         return user;
     }
 
@@ -130,6 +137,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findUserByUsername(String username) {
         return userRepository.findByUsername(username);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        userRepository.deleteById(id);
     }
 
 

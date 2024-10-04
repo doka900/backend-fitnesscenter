@@ -12,4 +12,6 @@ public interface ReservationService {
     public Reservation updateReservation(ReservationDTO reservationDTO);
     public Reservation findReservationById(Long id);
     public void deleteReservationById(Long id);
+
+    List<Reservation> findReservationByUserId(Long id);
 }

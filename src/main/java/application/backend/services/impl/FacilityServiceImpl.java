@@ -90,12 +90,12 @@ public class FacilityServiceImpl implements FacilityService {
     }
 
     @Override
-    public Facility findFacilityById(long id) {
-        return facilityRepository.findById(id);
+    public Facility findFacilityById(Long id) {
+        return facilityRepository.findById(id).orElse(null);
     }
 
     @Override
-    public void deleteFacilityById(long id) {
+    public void deleteById(Long id) {
         facilityRepository.deleteById(id);
     }
 

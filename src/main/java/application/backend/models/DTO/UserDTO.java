@@ -36,5 +36,5 @@ public class UserDTO {
 
     private byte[] profileImage;
 
-
+    private Roles role;
 }

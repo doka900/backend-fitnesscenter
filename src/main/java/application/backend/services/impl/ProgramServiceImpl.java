@@ -78,4 +78,14 @@ public class ProgramServiceImpl implements ProgramService {
     public List<Program> getProgramByTrainer(Long userId) {
         return programRepository.getByUserId(userId);
     }
+
+    @Override
+    public void deleteById(Long id) {
+        programRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Program> findProgramByUserId(Long id) {
+        return programRepository.getByUserId(id);
+    }
 }

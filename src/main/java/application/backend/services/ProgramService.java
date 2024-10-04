@@ -13,4 +13,8 @@ public interface ProgramService {
     public Program updateProgram(ProgramDTO programDTO);
     public void deleteProgram(Long id);
     public List<Program> getProgramByTrainer(Long userId);
+
+    public void deleteById(Long id);
+
+    public List<Program> findProgramByUserId(Long id);
 }

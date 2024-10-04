@@ -16,7 +16,7 @@ public interface FacilityService {
 
     public Facility updateFacility(FacilityDTO facilityDTO);
 
-    public Facility findFacilityById(long id);
+    public Facility findFacilityById(Long id);
 
-    public void deleteFacilityById(long id);
+    public void deleteById(Long id);
 }

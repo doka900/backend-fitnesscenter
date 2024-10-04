@@ -34,5 +34,6 @@ public class Cart {
     )
     private Set<Program> programs;
 
-
+    @Column
+    private float price;
 }

@@ -8,8 +8,13 @@ import java.util.List;
 
 public interface CompanyService {
 
-    public Company createUser(CompanyDTO companyDTO);
+    public Company createCompany(CompanyDTO companyDTO);
 
-    public Company updateUser(CompanyDTO companyDTO);
+    public Company updateCompany(CompanyDTO companyDTO);
 
+    public List<Company> getAllCompanies();
+
+    public Company findCompanyByName(String name);
+
+    public void deleteById(Long id);
 }

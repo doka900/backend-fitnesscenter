@@ -9,4 +9,6 @@ public interface LoyaltyCardRepository extends JpaRepository<LoyaltyCard, Long> 
 
     LoyaltyCard findById(long id);
     void deleteById(long id);
+
+    LoyaltyCard findByUserId(Long id);
 }

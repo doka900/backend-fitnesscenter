@@ -61,8 +61,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		httpSecurity.headers().frameOptions().disable();
 		httpSecurity.csrf().disable().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 				.authorizeRequests()
-
-				.antMatchers(HttpMethod.GET, "/api/user/").permitAll()
+				.antMatchers(HttpMethod.POST, "/api/").permitAll()
+				.antMatchers(HttpMethod.GET, "/api/").permitAll()
+				.antMatchers(HttpMethod.POST, "/api/user/register/").permitAll()
+				.antMatchers(HttpMethod.PUT, "/api/user/*/").permitAll()
+				.antMatchers(HttpMethod.PUT, "/api/user/{username}/").permitAll()
+				.antMatchers(HttpMethod.POST, "/api/*/").permitAll()
+				.antMatchers(HttpMethod.GET, "/api/*/").permitAll()
+				.antMatchers(HttpMethod.POST, "/api/company/").permitAll()
+				.antMatchers(HttpMethod.GET, "/api/company/").permitAll()
 
 				.anyRequest().authenticated();
 

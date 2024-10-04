@@ -7,6 +7,8 @@ import application.backend.services.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CompanyServiceImpl implements CompanyService {
 
@@ -14,7 +16,7 @@ public class CompanyServiceImpl implements CompanyService {
     private CompanyRepository companyRepository;
 
     @Override
-    public Company createUser(CompanyDTO companyDTO) {
+    public Company createCompany(CompanyDTO companyDTO) {
 
         Company company = new Company();
 
@@ -29,8 +31,8 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public Company updateUser(CompanyDTO companyDTO) {
-        Company updatedCompany = companyRepository.findById(companyDTO.getId()).orElse(null);
+    public Company updateCompany(CompanyDTO companyDTO) {
+        Company updatedCompany = companyRepository.findByName(companyDTO.getName());
 
        if(companyDTO.getName() != null) {
            updatedCompany.setName(companyDTO.getName());
@@ -56,5 +58,20 @@ public class CompanyServiceImpl implements CompanyService {
        );
 
        return updatedCompany;
+    }
+
+    @Override
+    public List<Company> getAllCompanies() {
+        return companyRepository.findAll();
+    }
+
+    @Override
+    public Company findCompanyByName(String name) {
+        return companyRepository.findByName(name);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        companyRepository.deleteById(id);
     }
 }

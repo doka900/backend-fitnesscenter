@@ -19,4 +19,6 @@ public interface CompanyRepository extends JpaRepository<Company, Long> {
     void updateCompany(String name, String description, String slogan, byte[] logo_image, long id);
 
 
+    Company findByName(String name);
+
 }

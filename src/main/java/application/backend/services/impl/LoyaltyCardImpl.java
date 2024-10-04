@@ -12,8 +12,12 @@ public class LoyaltyCardImpl implements LoyaltyCardService {
     @Autowired
     private LoyaltyCardRepository loyaltyCardRepository;
 
-    public LoyaltyCard findById(LoyaltyCardDTO loyaltyCardDTO) {
-        return loyaltyCardRepository.findById(loyaltyCardDTO.getId()).orElse(null);
+    public LoyaltyCard findById(Long id) {
+        return loyaltyCardRepository.findById(id).orElse(null);
+    }
+
+    public LoyaltyCard findByUserId(Long id) {
+        return loyaltyCardRepository.findByUserId(id);
     }
 
     @Override
@@ -29,8 +33,13 @@ public class LoyaltyCardImpl implements LoyaltyCardService {
         return loyaltyCard;
     }
 
-    public void deleteById(LoyaltyCardDTO loyaltyCardDTO) {
-        loyaltyCardRepository.deleteById(loyaltyCardDTO.getId());
+    public void deleteById(Long id) {
+        loyaltyCardRepository.deleteById(id);
+    }
+
+    @Override
+    public LoyaltyCard updateLoyaltyCard(LoyaltyCardDTO loyaltyCardDTO) {
+        return null;
     }
 
 

@@ -48,4 +48,14 @@ public class ScheduleServiceImpl implements ScheduleService {
     public void deleteSchedule(Long id) {
         scheduleRepository.deleteById(id);
     }
+
+    @Override
+    public Schedule findSheduleByProgramId(Long id) {
+        return scheduleRepository.findByProgramId(id);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        scheduleRepository.deleteById(id);
+    }
 }

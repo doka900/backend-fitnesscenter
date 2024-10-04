@@ -50,4 +50,9 @@ public class ReservationServisImpl implements ReservationService {
     public void deleteReservationById(Long id) {
         reservationRepository.deleteById(id);
     }
+
+    @Override
+    public List<Reservation> findReservationByUserId(Long id) {
+        return reservationRepository.findByUserId(id);
+    }
 }
