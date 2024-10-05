@@ -22,18 +22,11 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Autowired
-	private UserDetailsService userDetailsService;
+	private CustomUserDetailsService userDetailsService; // Use the custom implementation
 
 	@Override
-	@Bean
-	public UserDetailsService userDetailsService() {
-		return super.userDetailsService();
-	}
-
-	@Autowired
-	public void configureAuthentication(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
-
-		authenticationManagerBuilder.userDetailsService(this.userDetailsService).passwordEncoder(passwordEncoder());
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+		auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
 	}
 
 	@Bean
@@ -55,24 +48,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	}
 
 	@Override
-	protected void configure(HttpSecurity httpSecurity) throws Exception {
-		httpSecurity.headers().cacheControl().disable();
-		httpSecurity.cors();
-		httpSecurity.headers().frameOptions().disable();
-		httpSecurity.csrf().disable().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+	protected void configure(HttpSecurity http) throws Exception {
+		http.headers().cacheControl().disable();
+		http.cors().and().csrf().disable()
+				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+				.and()
 				.authorizeRequests()
-				.antMatchers(HttpMethod.POST, "/api/").permitAll()
-				.antMatchers(HttpMethod.GET, "/api/").permitAll()
 				.antMatchers(HttpMethod.POST, "/api/user/register/").permitAll()
-				.antMatchers(HttpMethod.PUT, "/api/user/*/").permitAll()
-				.antMatchers(HttpMethod.PUT, "/api/user/{username}/").permitAll()
-				.antMatchers(HttpMethod.POST, "/api/*/").permitAll()
-				.antMatchers(HttpMethod.GET, "/api/*/").permitAll()
-				.antMatchers(HttpMethod.POST, "/api/company/").permitAll()
-				.antMatchers(HttpMethod.GET, "/api/company/").permitAll()
-
+				.antMatchers(HttpMethod.POST, "/api/user/login/").permitAll()
+				.antMatchers(HttpMethod.GET, "/api/user/getAll/").permitAll()
 				.anyRequest().authenticated();
 
-		httpSecurity.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
+		http.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
 	}
 }

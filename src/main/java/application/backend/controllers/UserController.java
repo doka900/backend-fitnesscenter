@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("api/user")
 public class UserController {
@@ -53,7 +53,7 @@ public class UserController {
     @PostMapping(value = "/register/", consumes = "application/json")
     public ResponseEntity<User> Register(@RequestBody UserDTO userDTO) {
         User user = userService.createUser(userDTO);
-        return new ResponseEntity<User>(user, HttpStatus.OK);
+        return new ResponseEntity<User>(user, HttpStatus.CREATED);
     }
 
     @GetMapping(value = "/{id}/")
