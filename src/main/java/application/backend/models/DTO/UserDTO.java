@@ -34,7 +34,7 @@ public class UserDTO {
 
     private String display_name;
 
-    private byte[] profileImage;
+    private String profileImage;
 
     private Roles role;
 }

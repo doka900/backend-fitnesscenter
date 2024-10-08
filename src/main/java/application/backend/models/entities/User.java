@@ -53,9 +53,11 @@ public class User {
     @Column(name = "display_name")
     private String displayName;
 
-    @Lob
+    @Column(name = "is_verified")
+    private boolean isVerified = false;
+
     @Column(name = "profile_image")
-    private byte[] profileImage;
+    private String profileImage;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

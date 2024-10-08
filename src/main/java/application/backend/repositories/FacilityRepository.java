@@ -18,10 +18,11 @@ public interface FacilityRepository extends JpaRepository<Facility, Long> {
 
     @Modifying
     @Transactional
-    @Query(value = "update facility f set f.country = ?1, f.city = ?2, f.zip_code = ?3, f.address = ?4," +
-            "f.phone_number = ?5, f.email = ?6, f.calendar_link = ?7, f.facility_type = ?8," +
-            "where u.id = ?9", nativeQuery = true)
+    @Query(value = "UPDATE facilities f SET f.country = ?1, f.city = ?2, f.zip_code = ?3, f.address = ?4, " +
+            "f.phone_number = ?5, f.e_mail = ?6, f.calendar_link = ?7, f.facility_type = ?8 " +
+            "WHERE f.id = ?9", nativeQuery = true)
     void updateFacility(String country, String city, String zipCode,
                         String address, String phoneNumber, String email,
-                        String calendarLink, FacilityType facilityType, long id);
+                        String calendarLink, String facility_type, long id);
+
 }

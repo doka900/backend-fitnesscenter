@@ -49,14 +49,39 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.headers().cacheControl().disable();
-		http.cors().and().csrf().disable()
+		http
+				.headers().cacheControl().disable()
+				.and()
+				.cors() // Make sure CORS is enabled
+				.and()
+				.csrf().disable()
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 				.and()
 				.authorizeRequests()
 				.antMatchers(HttpMethod.POST, "/api/user/register/").permitAll()
 				.antMatchers(HttpMethod.POST, "/api/user/login/").permitAll()
+				.antMatchers(HttpMethod.POST, "/api/user/verify-email/").permitAll()
+				.antMatchers(HttpMethod.GET, "/api/user/verify-email/{token}").permitAll()
+				.antMatchers(HttpMethod.GET, "/api/user/verify-email/**").permitAll()
 				.antMatchers(HttpMethod.GET, "/api/user/getAll/").permitAll()
+				.antMatchers(HttpMethod.GET, "/api/user/username/{username}/").permitAll()
+				.antMatchers(HttpMethod.GET, "/api/user/checkUsername}/").permitAll()
+				.antMatchers(HttpMethod.GET, "/api/user/checkEmail/").permitAll()
+				.antMatchers(HttpMethod.PUT, "/api/user/{username}/").permitAll()
+				.antMatchers(HttpMethod.POST, "/api/user/oldPasswordVerification/{username}/").permitAll()
+				.antMatchers(HttpMethod.PUT, "/api/user/changePassword/{username}/").permitAll()
+				.antMatchers(HttpMethod.GET, "/api/facility/").permitAll()
+				.antMatchers(HttpMethod.POST, "/api/facility/").permitAll()
+				.antMatchers(HttpMethod.GET, "/api/facility/{id}/").permitAll()
+				.antMatchers(HttpMethod.PUT, "/api/facility/update/{id}/").permitAll()
+				.antMatchers(HttpMethod.DELETE, "/api/facility/{id}/").permitAll()
+				.antMatchers(HttpMethod.GET, "/api/facility/types/").permitAll()
+				.antMatchers(HttpMethod.GET, "/api/facilitySpace/types/").permitAll()
+				.antMatchers(HttpMethod.POST, "/api/facilitySpace/").permitAll()
+				.antMatchers(HttpMethod.GET, "/api/facilitySpace/{id}/").permitAll()
+				.antMatchers(HttpMethod.PUT, "/api/facilitySpace/update/{id}/").permitAll()
+				.antMatchers(HttpMethod.DELETE, "/api/facilitySpace/{id}/").permitAll()
+
 				.anyRequest().authenticated();
 
 		http.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);

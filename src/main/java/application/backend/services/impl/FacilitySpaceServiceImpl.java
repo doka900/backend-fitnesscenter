@@ -2,7 +2,9 @@ package application.backend.services.impl;
 
 import application.backend.models.DTO.FacilitySpaceDTO;
 import application.backend.models.entities.FacilitySpace;
+import application.backend.models.enums.FacilitySpaceType;
 import application.backend.repositories.FacilitySpaceRepository;
+import application.backend.services.FacilityService;
 import application.backend.services.FacilitySpaceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +16,8 @@ public class FacilitySpaceServiceImpl implements FacilitySpaceService {
 
     @Autowired
     FacilitySpaceRepository facilitySpaceRepository;
+    @Autowired
+    FacilityService facilityService;
 
     @Override
     public FacilitySpace createFacilitySpace(FacilitySpaceDTO facilitySpaceDTO) {
@@ -22,17 +26,18 @@ public class FacilitySpaceServiceImpl implements FacilitySpaceService {
 
         facilitySpace.setName(facilitySpaceDTO.getName());
         facilitySpace.setCapacity(facilitySpaceDTO.getCapacity());
-        facilitySpace.setFacility(facilitySpaceDTO.getFacility());
-        facilitySpace.setType(facilitySpaceDTO.getFacilitySpaceType());
+        facilitySpace.setType(FacilitySpaceType.valueOf(facilitySpaceDTO.getFacilitySpaceType().toString())) ;
 
+        facilitySpace.setFacility(facilityService.findFacilityById(facilitySpaceDTO.getFacility_id()));
         facilitySpaceRepository.save(facilitySpace);
+
 
         return facilitySpace;
     }
 
     @Override
-    public FacilitySpace updateFacilitySpace(FacilitySpaceDTO facilitySpaceDTO) {
-        FacilitySpace updatedFacilitySpace = facilitySpaceRepository.findById(facilitySpaceDTO.getId()).orElse(null);
+    public FacilitySpace updateFacilitySpace(FacilitySpaceDTO facilitySpaceDTO, Long id) {
+        FacilitySpace updatedFacilitySpace = facilitySpaceRepository.findById(id).orElse(null);
 
         if(facilitySpaceDTO.getName() != null){
             updatedFacilitySpace.setName(facilitySpaceDTO.getName());
@@ -44,7 +49,7 @@ public class FacilitySpaceServiceImpl implements FacilitySpaceService {
             updatedFacilitySpace.setType(facilitySpaceDTO.getFacilitySpaceType());
         }
 
-        facilitySpaceRepository.updateFacilitySpace(updatedFacilitySpace.getName(), updatedFacilitySpace.getCapacity(), updatedFacilitySpace.getType() , updatedFacilitySpace.getId());
+        facilitySpaceRepository.updateFacilitySpace(updatedFacilitySpace.getName(), updatedFacilitySpace.getCapacity(), updatedFacilitySpace.getType().toString() , updatedFacilitySpace.getId());
 
         return updatedFacilitySpace;
     }

@@ -11,7 +11,7 @@ public interface FacilitySpaceService {
 
     public FacilitySpace createFacilitySpace(FacilitySpaceDTO facilitySpaceDTO);
 
-    public FacilitySpace updateFacilitySpace(FacilitySpaceDTO facilitySpaceDTO);
+    public FacilitySpace updateFacilitySpace(FacilitySpaceDTO facilitySpaceDTO, Long id);
 
     public FacilitySpace findFacilitySpaceById(Long id);
 

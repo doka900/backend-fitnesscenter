@@ -14,7 +14,7 @@ public interface FacilityService {
 
     public Facility createFacility(FacilityDTO facilityDTO);
 
-    public Facility updateFacility(FacilityDTO facilityDTO);
+    public Facility updateFacility(FacilityDTO facilityDTO, Long id);
 
     public Facility findFacilityById(Long id);
 

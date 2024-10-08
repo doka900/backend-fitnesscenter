@@ -18,5 +18,5 @@ public class FacilitySpaceDTO {
     private String name;
     private Long capacity;
     private FacilitySpaceType facilitySpaceType;
-    private Facility facility;
+    private Long facility_id;
 }

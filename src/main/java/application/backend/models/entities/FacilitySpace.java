@@ -26,7 +26,8 @@ public class FacilitySpace {
     @Column
     private Long capacity;
 
-    @Column
+    @Enumerated(EnumType.STRING)
+    @Column(name = "type")
     private FacilitySpaceType type;
 
     @JsonBackReference

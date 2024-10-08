@@ -4,6 +4,7 @@ import application.backend.models.DTO.FacilityDTO;
 import application.backend.models.DTO.FacilitySpaceDTO;
 import application.backend.models.entities.Facility;
 import application.backend.models.entities.FacilitySpace;
+import application.backend.repositories.CompanyRepository;
 import application.backend.repositories.FacilityRepository;
 import application.backend.services.FacilityService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,8 @@ public class FacilityServiceImpl implements FacilityService {
 
     @Autowired
     private FacilityRepository facilityRepository;
+    @Autowired
+    private CompanyRepository companyRepository;
 
     @Override
     public List<Facility> findAllFacilities() {
@@ -26,7 +29,7 @@ public class FacilityServiceImpl implements FacilityService {
     public Facility createFacility(FacilityDTO facilityDTO) {
         Facility facility = new Facility();
 
-        facility.setCompany(facilityDTO.getCompany());
+        facility.setCompany(companyRepository.findCompanyById(1L));
         facility.setCountry(facilityDTO.getCountry());
         facility.setCity(facilityDTO.getCity());
         facility.setZipCode(facilityDTO.getZipCode());
@@ -42,8 +45,10 @@ public class FacilityServiceImpl implements FacilityService {
     }
 
     @Override
-    public Facility updateFacility(FacilityDTO facilityDTO) {
-        Facility updatedFacility = facilityRepository.findById(facilityDTO.getId()).get();
+    public Facility updateFacility(FacilityDTO facilityDTO, Long id) {
+        Facility updatedFacility = facilityRepository.findById(id).orElse(null);
+
+        System.out.println("Facility to update: " + updatedFacility);
 
         if (facilityDTO.getCompany() != null) {
             updatedFacility.setCompany(facilityDTO.getCompany());
@@ -69,7 +74,7 @@ public class FacilityServiceImpl implements FacilityService {
         if (facilityDTO.getCalendarLink() != null) {
             updatedFacility.setCalendarLink(facilityDTO.getCalendarLink());
         }
-        if (updatedFacility.getFacilityType().equals(facilityDTO.getFacilityType())) {
+        if (!updatedFacility.getFacilityType().equals(facilityDTO.getFacilityType())) {
             updatedFacility.setFacilityType(facilityDTO.getFacilityType());
         }
 
@@ -82,7 +87,7 @@ public class FacilityServiceImpl implements FacilityService {
                 updatedFacility.getPhoneNumber(),
                 updatedFacility.getEmail(),
                 updatedFacility.getCalendarLink(),
-                updatedFacility.getFacilityType(),
+                (updatedFacility.getFacilityType()).toString(),
                 updatedFacility.getId()
         );
 

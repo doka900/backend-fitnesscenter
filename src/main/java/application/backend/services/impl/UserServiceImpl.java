@@ -10,18 +10,28 @@ import application.backend.models.enums.Roles;
 import application.backend.repositories.CartRepository;
 import application.backend.repositories.LoyaltyCardRepository;
 import application.backend.repositories.UserRepository;
+import application.backend.repositories.VerifiedTokenRepository;
+import application.backend.security.VerifiedToken;
+import application.backend.services.EmailService;
 import application.backend.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class UserServiceImpl implements UserService {
 
+
+    @Autowired
+    private VerifiedTokenRepository verifiedTokenRepository;
     @Autowired
     private UserRepository userRepository;
 
@@ -32,6 +42,12 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private CartRepository cartRepository;
 
+
+    @Autowired
+    private VerifiedTokenRepository tokenRepository;
+
+    @Autowired
+    private EmailService emailService;
     @Override
     public List<User> findAllUsers() {
         return userRepository.findAll();
@@ -39,6 +55,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User createUser(UserDTO userDTO) {
+
+        User existingUser = userRepository.findByUsername(userDTO.getUsername());
+        if (existingUser != null) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Username already exists");
+        }
 
         User user = new User();
         LoyaltyCard loyaltyCard = new LoyaltyCard();
@@ -62,6 +83,19 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
         loyaltyCardRepository.save(loyaltyCard);
         cartRepository.save(cart);
+
+        // Create a verification token
+        String token = UUID.randomUUID().toString();
+        VerifiedToken verifiedToken = new VerifiedToken();
+        verifiedToken.setToken(token);
+        verifiedToken.setUser(user); // Associate the token with the user
+        verifiedToken.setExpiryDate(LocalDateTime.now().plusHours(24)); // Set expiration, e.g., 24 hours
+        verifiedTokenRepository.save(verifiedToken);
+
+        // Send verification email only once
+        String verificationLink = "http://localhost:8080/api/user/verify-email/?token=" + token;
+
+        emailService.sendVerificationEmail(user.getEmail(), verificationLink);
 
         return user;
     }
@@ -142,6 +176,16 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteById(Long id) {
         userRepository.deleteById(id);
+    }
+
+    @Override
+    public boolean usernameExists(String username) {
+        return userRepository.findByUsername(username) != null;
+    }
+
+    @Override
+    public boolean emailExists(String email) {
+        return userRepository.findByEmail(email) != null;
     }
 
 
