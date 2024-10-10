@@ -54,6 +54,9 @@ public class Facility {
     @Column(name = "facility_type")
     private FacilityType facilityType;
 
+    @Column
+    private String image;
+
     @JsonManagedReference
     @OneToMany(mappedBy = "facility")
     private Set<FacilitySpace> facilitySpaces;

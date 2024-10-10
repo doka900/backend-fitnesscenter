@@ -30,6 +30,9 @@ public class FacilitySpace {
     @Column(name = "type")
     private FacilitySpaceType type;
 
+    @Column(name = "image")
+    private String image;
+
     @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "facility_id", nullable = false)

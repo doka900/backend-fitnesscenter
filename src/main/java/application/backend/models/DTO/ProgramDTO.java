@@ -21,5 +21,5 @@ public class ProgramDTO {
     private String description;
     private ProgramLevel programLevel;
     private Trainer trainer;
-
+    private String image;
 }

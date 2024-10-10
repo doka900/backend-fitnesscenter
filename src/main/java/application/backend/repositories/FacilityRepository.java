@@ -1,7 +1,6 @@
 package application.backend.repositories;
 
 import application.backend.models.entities.Facility;
-import application.backend.models.enums.FacilityType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -19,10 +18,10 @@ public interface FacilityRepository extends JpaRepository<Facility, Long> {
     @Modifying
     @Transactional
     @Query(value = "UPDATE facilities f SET f.country = ?1, f.city = ?2, f.zip_code = ?3, f.address = ?4, " +
-            "f.phone_number = ?5, f.e_mail = ?6, f.calendar_link = ?7, f.facility_type = ?8 " +
-            "WHERE f.id = ?9", nativeQuery = true)
+            "f.phone_number = ?5, f.e_mail = ?6, f.calendar_link = ?7, f.facility_type = ?8," +
+            "f.image = ?9 WHERE f.id = ?10", nativeQuery = true)
     void updateFacility(String country, String city, String zipCode,
                         String address, String phoneNumber, String email,
-                        String calendarLink, String facility_type, long id);
+                        String calendarLink, String facility_type, String image, long id);
 
 }

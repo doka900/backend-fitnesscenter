@@ -38,7 +38,7 @@ public class FacilityServiceImpl implements FacilityService {
         facility.setEmail(facilityDTO.getEmail());
         facility.setCalendarLink(facilityDTO.getCalendarLink());
         facility.setFacilityType(facilityDTO.getFacilityType());
-
+        facility.setImage(facilityDTO.getImage());
         facilityRepository.save(facility);
 
         return facility;
@@ -77,6 +77,9 @@ public class FacilityServiceImpl implements FacilityService {
         if (!updatedFacility.getFacilityType().equals(facilityDTO.getFacilityType())) {
             updatedFacility.setFacilityType(facilityDTO.getFacilityType());
         }
+        if (!updatedFacility.getImage().equals(facilityDTO.getImage())) {
+            updatedFacility.setImage(facilityDTO.getImage());
+        }
 
         facilityRepository.updateFacility(
 
@@ -88,7 +91,9 @@ public class FacilityServiceImpl implements FacilityService {
                 updatedFacility.getEmail(),
                 updatedFacility.getCalendarLink(),
                 (updatedFacility.getFacilityType()).toString(),
+                updatedFacility.getImage(),
                 updatedFacility.getId()
+
         );
 
         return updatedFacility;

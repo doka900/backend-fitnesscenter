@@ -35,7 +35,7 @@ public class ProgramServiceImpl implements ProgramService {
         program.setDescription(programDTO.getDescription());
         program.setProgramLevel(programDTO.getProgramLevel());
         program.setTrainer(programDTO.getTrainer());
-
+        program.setImage(program.getImage());
         programRepository.save(program);
 
         return program;
@@ -63,8 +63,11 @@ public class ProgramServiceImpl implements ProgramService {
         if (updatedProgram != null) {
             updatedProgram.setTrainer(programDTO.getTrainer());
         }
+        if (updatedProgram != null) {
+            updatedProgram.setImage(programDTO.getImage());
+        }
 
-        programRepository.updateProgram(updatedProgram.getProgramDuration(), updatedProgram.getPrice(), updatedProgram.getName(), updatedProgram.getDescription(), updatedProgram.getProgramLevel(), updatedProgram.getTrainer(), updatedProgram.getId());
+        programRepository.updateProgram(updatedProgram.getProgramDuration(), updatedProgram.getPrice(), updatedProgram.getName(), updatedProgram.getDescription(), updatedProgram.getProgramLevel(), updatedProgram.getTrainer(), updatedProgram.getImage(),updatedProgram.getId());
 
         return updatedProgram;
     }

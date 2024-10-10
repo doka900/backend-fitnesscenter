@@ -19,4 +19,5 @@ public class FacilitySpaceDTO {
     private Long capacity;
     private FacilitySpaceType facilitySpaceType;
     private Long facility_id;
+    private String image;
 }

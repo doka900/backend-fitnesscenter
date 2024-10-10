@@ -41,5 +41,6 @@ public class FacilityDTO {
 
     private FacilityType facilityType;
 
+    private String image;
 
 }

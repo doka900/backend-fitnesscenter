@@ -44,6 +44,9 @@ public class Program {
     @JoinColumn(name = "trainer_id")
     private Trainer trainer;
 
+    @Column(name = "image")
+    private String image;
+
     @ManyToMany
     @JoinTable(
             name = "program_participant",

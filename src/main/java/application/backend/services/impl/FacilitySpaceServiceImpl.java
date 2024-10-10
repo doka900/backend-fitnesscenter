@@ -27,7 +27,7 @@ public class FacilitySpaceServiceImpl implements FacilitySpaceService {
         facilitySpace.setName(facilitySpaceDTO.getName());
         facilitySpace.setCapacity(facilitySpaceDTO.getCapacity());
         facilitySpace.setType(FacilitySpaceType.valueOf(facilitySpaceDTO.getFacilitySpaceType().toString())) ;
-
+        facilitySpace.setImage(facilitySpaceDTO.getImage());
         facilitySpace.setFacility(facilityService.findFacilityById(facilitySpaceDTO.getFacility_id()));
         facilitySpaceRepository.save(facilitySpace);
 
@@ -48,8 +48,12 @@ public class FacilitySpaceServiceImpl implements FacilitySpaceService {
         if(facilitySpaceDTO.getFacilitySpaceType() != null) {
             updatedFacilitySpace.setType(facilitySpaceDTO.getFacilitySpaceType());
         }
+        if(facilitySpaceDTO.getImage() != null) {
+            updatedFacilitySpace.setImage(facilitySpaceDTO.getImage());
+        }
 
-        facilitySpaceRepository.updateFacilitySpace(updatedFacilitySpace.getName(), updatedFacilitySpace.getCapacity(), updatedFacilitySpace.getType().toString() , updatedFacilitySpace.getId());
+
+        facilitySpaceRepository.updateFacilitySpace(updatedFacilitySpace.getName(), updatedFacilitySpace.getCapacity(), updatedFacilitySpace.getType().toString(), updatedFacilitySpace.getImage() , updatedFacilitySpace.getId());
 
         return updatedFacilitySpace;
     }
