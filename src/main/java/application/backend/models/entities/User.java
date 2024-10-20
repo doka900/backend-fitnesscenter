@@ -9,6 +9,7 @@ import javax.persistence.*;
 import application.backend.models.enums.Roles;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -70,9 +71,15 @@ public class User {
     private Cart cart;
 
     @ManyToMany(mappedBy = "participants")
+    @JsonBackReference
     private Set<Program> programs = new HashSet<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Reservation> reservations = new HashSet<>();
+
+    public void addProgram(Program program) {
+
+
+    }
 
 }

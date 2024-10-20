@@ -2,8 +2,13 @@ package application.backend.services.impl;
 
 import application.backend.models.DTO.ProgramDTO;
 import application.backend.models.entities.Program;
+import application.backend.models.entities.User;
+import application.backend.models.enums.ProgramDuration;
+import application.backend.models.enums.ProgramLevel;
 import application.backend.repositories.ProgramRepository;
+import application.backend.repositories.UserRepository;
 import application.backend.services.ProgramService;
+import org.elasticsearch.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +19,8 @@ public class ProgramServiceImpl implements ProgramService {
 
     @Autowired
     private ProgramRepository programRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     @Override
     public List<Program> getAllPrograms() {
@@ -29,24 +36,34 @@ public class ProgramServiceImpl implements ProgramService {
     public Program createProgram(ProgramDTO programDTO) {
         Program program = new Program();
 
-        program.setProgramDuration(programDTO.getProgramDuration());
+        program.setProgramDuration(ProgramDuration.valueOf(programDTO.getProgramDuration()));
         program.setPrice(programDTO.getPrice());
         program.setName(programDTO.getName());
         program.setDescription(programDTO.getDescription());
-        program.setProgramLevel(programDTO.getProgramLevel());
-        program.setTrainer(programDTO.getTrainer());
-        program.setImage(program.getImage());
+        program.setProgramLevel(ProgramLevel.valueOf(programDTO.getProgramLevel()));
+        program.setTrainer((userRepository.findTrainerById(programDTO.getTrainerId())));
+        program.setImage(programDTO.getImage());
         programRepository.save(program);
 
+
+        System.out.println("Setting up trainer with id" + programDTO.getTrainerId() + "  res " + programDTO.getTrainerId()) ;
         return program;
     }
 
     @Override
-    public Program updateProgram(ProgramDTO programDTO) {
+    public Program updateProgram(ProgramDTO programDTO, Long id) {
+
+        System.out.println("TEST PROGRAM DTO programDTO" + id + " " +programDTO.getId());
+
 
         Program updatedProgram = programRepository.findById(programDTO.getId()).orElse(null);
+
+
         if (updatedProgram != null) {
-            updatedProgram.setProgramDuration(programDTO.getProgramDuration());
+            System.out.println("duration: " + programDTO.getProgramDuration().toString());
+            updatedProgram.setProgramDuration(ProgramDuration.valueOf(programDTO.getProgramDuration()));
+
+
         }
         if (updatedProgram != null) {
             updatedProgram.setPrice(programDTO.getPrice());
@@ -58,16 +75,17 @@ public class ProgramServiceImpl implements ProgramService {
             updatedProgram.setDescription(programDTO.getDescription());
         }
         if (updatedProgram != null) {
-            updatedProgram.setProgramLevel(programDTO.getProgramLevel());
+            updatedProgram.setProgramLevel(ProgramLevel.valueOf(programDTO.getProgramLevel()));
         }
         if (updatedProgram != null) {
-            updatedProgram.setTrainer(programDTO.getTrainer());
+            System.out.println( "finding trainer with id : " +programDTO.getTrainerId() +" res :" + userRepository.findTrainerById(programDTO.getTrainerId()));
+            updatedProgram.setTrainer(userRepository.findTrainerById(programDTO.getTrainerId()));
         }
         if (updatedProgram != null) {
             updatedProgram.setImage(programDTO.getImage());
         }
 
-        programRepository.updateProgram(updatedProgram.getProgramDuration(), updatedProgram.getPrice(), updatedProgram.getName(), updatedProgram.getDescription(), updatedProgram.getProgramLevel(), updatedProgram.getTrainer(), updatedProgram.getImage(),updatedProgram.getId());
+        programRepository.updateProgram(updatedProgram.getProgramDuration().ordinal(), updatedProgram.getPrice(), updatedProgram.getName(), updatedProgram.getDescription(), updatedProgram.getProgramLevel().ordinal(), updatedProgram.getTrainer().getId(), updatedProgram.getImage(),updatedProgram.getId());
 
         return updatedProgram;
     }
@@ -90,5 +108,14 @@ public class ProgramServiceImpl implements ProgramService {
     @Override
     public List<Program> findProgramByUserId(Long id) {
         return programRepository.getByUserId(id);
+    }
+
+    @Override
+    public Program addProgramToUser(Long programId, String username) {
+        Program program = programRepository.findById(programId).orElseThrow(() -> new ResourceNotFoundException("Program not found"));
+        User user = userRepository.findByUsername(username);
+
+        program.getParticipants().add(user);  // Add user to participants set
+        return programRepository.save(program);  // Save the program with updated participants
     }
 }

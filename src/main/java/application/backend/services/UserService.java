@@ -3,6 +3,7 @@ package application.backend.services;
 import java.util.List;
 import application.backend.models.DTO.UserDTO;
 import application.backend.models.entities.Program;
+import application.backend.models.entities.Trainer;
 import application.backend.models.entities.User;
 
 public interface UserService {
@@ -28,4 +29,6 @@ public interface UserService {
     public boolean usernameExists(String username);
 
     public boolean emailExists(String email) ;
+
+    public List<Trainer> findAllTrainers();
 }

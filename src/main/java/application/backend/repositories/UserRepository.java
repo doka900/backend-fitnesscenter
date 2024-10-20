@@ -1,5 +1,6 @@
 package application.backend.repositories;
 
+import application.backend.models.entities.Trainer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -8,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import application.backend.models.entities.User;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -28,4 +30,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
 
     User findByEmail(String email);
+
+    @Query(value = "SELECT * FROM users u WHERE u.dtype = 'Trainer'", nativeQuery = true)
+    List<Trainer> findTrainers();
+
+    @Query(value = "SELECT * FROM users u WHERE u.dtype = 'Trainer' and u.id=?1", nativeQuery = true)
+    Trainer findTrainerById(Long trainerId);
 }

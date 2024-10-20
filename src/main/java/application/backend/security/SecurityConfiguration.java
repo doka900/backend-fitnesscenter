@@ -61,6 +61,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers(HttpMethod.POST, "/api/user/register/").permitAll()
 				.antMatchers(HttpMethod.POST, "/api/user/login/").permitAll()
 				.antMatchers(HttpMethod.POST, "/api/user/verify-email/").permitAll()
+
+				.antMatchers(HttpMethod.GET, "/api/user/trainers/").permitAll()
+
 				.antMatchers(HttpMethod.GET, "/api/user/verify-email/{token}").permitAll()
 				.antMatchers(HttpMethod.GET, "/api/user/verify-email/**").permitAll()
 				.antMatchers(HttpMethod.GET, "/api/user/getAll/").permitAll()
@@ -81,6 +84,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers(HttpMethod.GET, "/api/facilitySpace/{id}/").permitAll()
 				.antMatchers(HttpMethod.PUT, "/api/facilitySpace/update/{id}/").permitAll()
 				.antMatchers(HttpMethod.DELETE, "/api/facilitySpace/{id}/").permitAll()
+
+				.antMatchers(HttpMethod.POST, "/api/program/").permitAll()
+				.antMatchers(HttpMethod.GET, "/api/program/").permitAll()
+				.antMatchers(HttpMethod.GET, "/api/program/{id}/").permitAll()
+				.antMatchers(HttpMethod.PUT, "/api/program/update/{id}/").permitAll()
+				.antMatchers(HttpMethod.GET, "/api/program/user/{id}/").permitAll()
+				.antMatchers(HttpMethod.GET, "/api/program/user/{username}/").permitAll()
+				.antMatchers(HttpMethod.PUT, "/api/program/update/").permitAll()
+				.antMatchers(HttpMethod.DELETE, "/api/program/{id}/").permitAll()
+				.antMatchers(HttpMethod.DELETE, "/api/program/{programId}/user/{username}/").permitAll()
+
 
 				.anyRequest().authenticated();
 

@@ -3,6 +3,7 @@ package application.backend.controllers;
 import application.backend.models.DTO.JwtAuthRequestDTO;
 import application.backend.models.DTO.UserDTO;
 import application.backend.models.DTO.UserTokenDTO;
+import application.backend.models.entities.Trainer;
 import application.backend.models.entities.User;
 import application.backend.repositories.UserRepository;
 import application.backend.repositories.VerifiedTokenRepository;
@@ -61,6 +62,11 @@ public class UserController {
     @GetMapping(value = "/getAll/")
     public ResponseEntity<List<User>> findAllUsers() {
         return new ResponseEntity<>(userService.findAllUsers(), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/trainers/")
+    public ResponseEntity<List<Trainer>> findAllTrainers() {
+        return new ResponseEntity<>(userService.findAllTrainers(), HttpStatus.OK);
     }
 
     @PostMapping(value = "/register/", consumes = "application/json")

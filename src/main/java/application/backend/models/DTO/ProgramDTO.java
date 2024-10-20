@@ -15,11 +15,11 @@ import lombok.Setter;
 public class ProgramDTO {
 
     private Long id;
-    private ProgramDuration programDuration;
+    private String programDuration;
     private float price;
     private String name;
     private String description;
-    private ProgramLevel programLevel;
-    private Trainer trainer;
+    private String programLevel;
+    private Long trainerId;
     private String image;
 }

@@ -10,11 +10,13 @@ public interface ProgramService {
     public List<Program> getAllPrograms();
     public Program getProgramById(Long id);
     public Program createProgram(ProgramDTO programDTO);
-    public Program updateProgram(ProgramDTO programDTO);
+    public Program updateProgram(ProgramDTO programDTO, Long id);
     public void deleteProgram(Long id);
     public List<Program> getProgramByTrainer(Long userId);
 
     public void deleteById(Long id);
 
     public List<Program> findProgramByUserId(Long id);
+
+    public Program addProgramToUser(Long programId, String username);
 }

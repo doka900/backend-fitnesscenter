@@ -35,6 +35,8 @@ public class Company {
     @Column(name = "slogan")
     private String slogan;
 
+    private String email = "fitnesscenter.soh@gmail.com";
+
     @JsonManagedReference
     @OneToMany(mappedBy = "company")
     private Set<Facility> facilityList;

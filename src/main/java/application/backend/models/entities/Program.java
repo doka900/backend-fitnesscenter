@@ -3,6 +3,8 @@ package application.backend.models.entities;
 
 import application.backend.models.enums.ProgramDuration;
 import application.backend.models.enums.ProgramLevel;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,6 +27,7 @@ public class Program {
     @Column(name = "id")
     private Long id;
 
+    @Enumerated(EnumType.ORDINAL)
     @Column(name = "program_duration")
     private ProgramDuration programDuration;
 
@@ -37,6 +40,7 @@ public class Program {
     @Column
     private String description;
 
+    @Enumerated(EnumType.ORDINAL)
     @Column(name = "program_level")
     private ProgramLevel programLevel;
 
@@ -53,6 +57,8 @@ public class Program {
             joinColumns = @JoinColumn(name = "program_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id")
     )
+    @JsonManagedReference
     private Set<User> participants = new HashSet<>();
+
 
 }

@@ -2,10 +2,7 @@ package application.backend.services.impl;
 
 
 import application.backend.models.DTO.UserDTO;
-import application.backend.models.entities.Cart;
-import application.backend.models.entities.LoyaltyCard;
-import application.backend.models.entities.Program;
-import application.backend.models.entities.User;
+import application.backend.models.entities.*;
 import application.backend.models.enums.Roles;
 import application.backend.repositories.CartRepository;
 import application.backend.repositories.LoyaltyCardRepository;
@@ -186,6 +183,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean emailExists(String email) {
         return userRepository.findByEmail(email) != null;
+    }
+
+    @Override
+    public List<Trainer> findAllTrainers() {
+        return userRepository.findTrainers();
     }
 
 

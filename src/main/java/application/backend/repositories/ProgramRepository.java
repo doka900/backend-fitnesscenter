@@ -20,6 +20,6 @@ public interface ProgramRepository extends JpaRepository<Program, Long> {
 
     @Modifying
     @Transactional
-    @Query(value = "update programs p set p.programDuration = ?1, p.price = ?2, p.name = ?3 , p.description = ?4 ,p.programLevel = ?5, p.trainer = ?6, p.image = ?7 where p.id = ?8", nativeQuery = true)
-    void updateProgram(ProgramDuration programDuration, float price, String name, String description, ProgramLevel programLevel, Trainer trainer, String image, Long programId);
+    @Query(value = "UPDATE programs p SET p.program_duration = ?1, p.price = ?2, p.name = ?3, p.description = ?4, p.program_level = ?5, p.trainer_id = ?6, p.image = ?7 WHERE p.id = ?8", nativeQuery = true)
+    void updateProgram(int programDuration, float price, String name, String description, int programLevel, Long trainer_id, String image, Long programId);
 }
