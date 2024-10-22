@@ -37,4 +37,6 @@ public class UserDTO {
     private String profileImage;
 
     private Roles role;
+
+    private String type;
 }

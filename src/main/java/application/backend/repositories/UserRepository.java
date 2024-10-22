@@ -10,7 +10,6 @@ import application.backend.models.entities.User;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
@@ -36,4 +35,14 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query(value = "SELECT * FROM users u WHERE u.dtype = 'Trainer' and u.id=?1", nativeQuery = true)
     Trainer findTrainerById(Long trainerId);
+
+    @Modifying
+    @Transactional
+    @Query(value = "update users u set u.dtype='Trainer' where u.username = ?1", nativeQuery = true)
+    void setRoleAsTrainer(String username);
+
+    @Modifying
+    @Transactional
+    @Query(value = "update users u set u.dtype='User' where u.username = ?1", nativeQuery = true)
+    void setAsNormalUser(String username);
 }

@@ -53,6 +53,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public User createUser(UserDTO userDTO) {
 
+
+
         User existingUser = userRepository.findByUsername(userDTO.getUsername());
         if (existingUser != null) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Username already exists");
@@ -127,6 +129,14 @@ public class UserServiceImpl implements UserService {
 
         if (updateUserDTO.getProfileImage() != null) {
             updatedUser.setProfileImage(updateUserDTO.getProfileImage());
+        }
+
+        if (updateUserDTO.getType() != null) {
+            if (updateUserDTO.getType().equals("Trainer")) {
+                userRepository.setRoleAsTrainer(updatedUser.getUsername());
+            } else if (updateUserDTO.getType().equals("User")) {
+                userRepository.setAsNormalUser(updatedUser.getUsername());
+            }
         }
 
         userRepository.updateUser(updatedUser.getEmail(), updatedUser.getDateOfBirth(), updatedUser.getName(), updatedUser.getSurname(), updatedUser.getDescription(), updatedUser.getDisplayName(), updatedUser.getProfileImage(), updatedUser.getId());
