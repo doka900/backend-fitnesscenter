@@ -22,4 +22,6 @@ public class ProgramDTO {
     private String programLevel;
     private Long trainerId;
     private String image;
+    private Long facilityId;
+
 }

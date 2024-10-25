@@ -1,6 +1,8 @@
 package application.backend.models.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,7 +20,8 @@ import java.util.Set;
 @Table(name = "trainers")
 public class Trainer extends User{
 
-    @OneToMany(mappedBy = "trainer")
+    @OneToMany(mappedBy = "trainer", fetch = FetchType.LAZY)
+    @JsonManagedReference
     private Set<Program> programs = new HashSet<>();
 
 }

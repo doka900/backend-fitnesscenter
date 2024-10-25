@@ -32,7 +32,7 @@ public class ProgramController {
     private UserRepository userRepository;
 
     @PostMapping(value = "/")
-    public ResponseEntity<Program> createProgram(@RequestBody ProgramDTO programDTO) {
+    public ResponseEntity<?> createProgram(@RequestBody ProgramDTO programDTO) {
         Program program = programService.createProgram(programDTO);
         return new ResponseEntity<Program>(program, HttpStatus.OK);
     }
@@ -63,14 +63,14 @@ public class ProgramController {
     }
 
 
-    @GetMapping(value = "/user/{id}/")
-    public ResponseEntity<List<Program>> findProgramByUserId(@PathVariable("id") Long id) {
+    @GetMapping(value = "/user/id/{id}/")
+    public ResponseEntity<?> findProgramByUserId(@PathVariable("id") Long id) {
         List<Program> programs = programService.findProgramByUserId(id);
         return new ResponseEntity<List<Program>>(programs, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/user/{username}/")
-    public ResponseEntity<List<Program>> findProgramByUsername(@PathVariable("username") String username) {
+    @GetMapping(value = "/user/username/{username}/")
+    public ResponseEntity<?> findProgramByUsername(@PathVariable("username") String username) {
         User user = userService.findUserByUsername(username);
         List<Program> programs = programService.findProgramByUserId(user.getId());
         return new ResponseEntity<List<Program>>(programs, HttpStatus.OK);

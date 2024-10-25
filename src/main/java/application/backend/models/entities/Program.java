@@ -3,8 +3,7 @@ package application.backend.models.entities;
 
 import application.backend.models.enums.ProgramDuration;
 import application.backend.models.enums.ProgramLevel;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -44,12 +43,17 @@ public class Program {
     @Column(name = "program_level")
     private ProgramLevel programLevel;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "trainer_id")
-    private Trainer trainer;
+    @JsonBackReference
+    private User trainer;
 
     @Column(name = "image")
     private String image;
+
+    @ManyToOne
+    @JoinColumn(name = "facility_id")
+    private Facility facility;
 
     @ManyToMany
     @JoinTable(

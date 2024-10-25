@@ -14,7 +14,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "dtype")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -72,7 +73,10 @@ public class User {
 
     @ManyToMany(mappedBy = "participants")
     @JsonBackReference
-    private Set<Program> programs = new HashSet<>();
+    private Set<Program> programs = new HashSet<>();  // Participated programs
+
+    @OneToMany(mappedBy = "trainer")
+    private Set<Program> trainingPrograms = new HashSet<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Reservation> reservations = new HashSet<>();

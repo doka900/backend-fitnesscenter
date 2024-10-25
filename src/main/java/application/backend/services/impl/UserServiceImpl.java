@@ -4,10 +4,7 @@ package application.backend.services.impl;
 import application.backend.models.DTO.UserDTO;
 import application.backend.models.entities.*;
 import application.backend.models.enums.Roles;
-import application.backend.repositories.CartRepository;
-import application.backend.repositories.LoyaltyCardRepository;
-import application.backend.repositories.UserRepository;
-import application.backend.repositories.VerifiedTokenRepository;
+import application.backend.repositories.*;
 import application.backend.security.VerifiedToken;
 import application.backend.services.EmailService;
 import application.backend.services.UserService;
@@ -16,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
@@ -39,6 +37,8 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private CartRepository cartRepository;
 
+    @Autowired
+    private ProgramRepository programRepository;
 
     @Autowired
     private VerifiedTokenRepository tokenRepository;
@@ -99,7 +99,7 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
-
+    @Transactional
     @Override
     public User updateUser(UserDTO updateUserDTO, String username) {
 
@@ -133,11 +133,17 @@ public class UserServiceImpl implements UserService {
 
         if (updateUserDTO.getType() != null) {
             if (updateUserDTO.getType().equals("Trainer")) {
+                // Promote user to Trainer role
                 userRepository.setRoleAsTrainer(updatedUser.getUsername());
             } else if (updateUserDTO.getType().equals("User")) {
+                // Demote user to a normal user
                 userRepository.setAsNormalUser(updatedUser.getUsername());
+
+                // Bulk remove trainer associations from programs
+                programRepository.removeTrainerFromPrograms(updatedUser.getId());
             }
         }
+
 
         userRepository.updateUser(updatedUser.getEmail(), updatedUser.getDateOfBirth(), updatedUser.getName(), updatedUser.getSurname(), updatedUser.getDescription(), updatedUser.getDisplayName(), updatedUser.getProfileImage(), updatedUser.getId());
 

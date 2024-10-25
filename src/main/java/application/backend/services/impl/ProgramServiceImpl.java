@@ -1,10 +1,12 @@
 package application.backend.services.impl;
 
 import application.backend.models.DTO.ProgramDTO;
+import application.backend.models.entities.Facility;
 import application.backend.models.entities.Program;
 import application.backend.models.entities.User;
 import application.backend.models.enums.ProgramDuration;
 import application.backend.models.enums.ProgramLevel;
+import application.backend.repositories.FacilityRepository;
 import application.backend.repositories.ProgramRepository;
 import application.backend.repositories.UserRepository;
 import application.backend.services.ProgramService;
@@ -13,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProgramServiceImpl implements ProgramService {
@@ -32,22 +35,33 @@ public class ProgramServiceImpl implements ProgramService {
         return programRepository.findById(id).orElse(null);
     }
 
+    @Autowired
+    private FacilityRepository facilityRepository;
+
     @Override
     public Program createProgram(ProgramDTO programDTO) {
-        Program program = new Program();
-
-        program.setProgramDuration(ProgramDuration.valueOf(programDTO.getProgramDuration()));
-        program.setPrice(programDTO.getPrice());
-        program.setName(programDTO.getName());
-        program.setDescription(programDTO.getDescription());
-        program.setProgramLevel(ProgramLevel.valueOf(programDTO.getProgramLevel()));
-        program.setTrainer((userRepository.findTrainerById(programDTO.getTrainerId())));
-        program.setImage(programDTO.getImage());
-        programRepository.save(program);
 
 
-        System.out.println("Setting up trainer with id" + programDTO.getTrainerId() + "  res " + programDTO.getTrainerId()) ;
-        return program;
+        Optional<Facility> facilityOpt = facilityRepository.findById(programDTO.getFacilityId());
+        if(facilityOpt.isPresent()) {
+            Program program = new Program();
+            
+            Facility facility = facilityOpt.get();
+
+            program.setFacility(facility);
+            program.setProgramDuration(ProgramDuration.valueOf(programDTO.getProgramDuration()));
+            program.setPrice(programDTO.getPrice());
+            program.setName(programDTO.getName());
+            program.setDescription(programDTO.getDescription());
+            program.setProgramLevel(ProgramLevel.valueOf(programDTO.getProgramLevel()));
+            program.setTrainer((userRepository.findTrainerById(programDTO.getTrainerId())));
+            program.setImage(programDTO.getImage());
+            programRepository.save(program);
+
+
+            System.out.println("Setting up trainer with id" + programDTO.getTrainerId() + "  res " + programDTO.getTrainerId());
+            return program;}
+        else { throw new RuntimeException("Facility not found");}
     }
 
     @Override
@@ -57,7 +71,8 @@ public class ProgramServiceImpl implements ProgramService {
 
 
         Program updatedProgram = programRepository.findById(programDTO.getId()).orElse(null);
-
+        Facility facility = facilityRepository.findById(programDTO.getFacilityId()).orElseThrow();
+        updatedProgram.setFacility(facility);
 
         if (updatedProgram != null) {
             System.out.println("duration: " + programDTO.getProgramDuration().toString());

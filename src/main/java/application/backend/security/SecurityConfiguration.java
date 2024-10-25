@@ -91,6 +91,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers(HttpMethod.PUT, "/api/program/update/{id}/").permitAll()
 				.antMatchers(HttpMethod.GET, "/api/program/user/{id}/").permitAll()
 				.antMatchers(HttpMethod.GET, "/api/program/user/{username}/").permitAll()
+				.antMatchers(HttpMethod.GET, "/api/program/user/id/{id}/").permitAll()
+				.antMatchers(HttpMethod.GET, "/api/program/user/username/{username}/").permitAll()
 				.antMatchers(HttpMethod.PUT, "/api/program/update/").permitAll()
 				.antMatchers(HttpMethod.DELETE, "/api/program/{id}/").permitAll()
 				.antMatchers(HttpMethod.DELETE, "/api/program/{programId}/user/{username}/").permitAll()

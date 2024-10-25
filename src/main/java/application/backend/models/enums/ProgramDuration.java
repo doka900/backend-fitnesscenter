@@ -15,3 +15,4 @@ public enum ProgramDuration {
         return weeks;
     }
 }
+
