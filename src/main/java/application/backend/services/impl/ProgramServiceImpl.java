@@ -57,17 +57,15 @@ public class ProgramServiceImpl implements ProgramService {
             program.setTrainer((userRepository.findTrainerById(programDTO.getTrainerId())));
             program.setImage(programDTO.getImage());
             programRepository.save(program);
-
-
-            System.out.println("Setting up trainer with id" + programDTO.getTrainerId() + "  res " + programDTO.getTrainerId());
-            return program;}
+            return program;
+        }
         else { throw new RuntimeException("Facility not found");}
     }
 
     @Override
     public Program updateProgram(ProgramDTO programDTO, Long id) {
 
-        System.out.println("TEST PROGRAM DTO programDTO" + id + " " +programDTO.getId());
+
 
 
         Program updatedProgram = programRepository.findById(programDTO.getId()).orElse(null);
@@ -93,7 +91,6 @@ public class ProgramServiceImpl implements ProgramService {
             updatedProgram.setProgramLevel(ProgramLevel.valueOf(programDTO.getProgramLevel()));
         }
         if (updatedProgram != null) {
-            System.out.println( "finding trainer with id : " +programDTO.getTrainerId() +" res :" + userRepository.findTrainerById(programDTO.getTrainerId()));
             updatedProgram.setTrainer(userRepository.findTrainerById(programDTO.getTrainerId()));
         }
         if (updatedProgram != null) {
@@ -130,7 +127,7 @@ public class ProgramServiceImpl implements ProgramService {
         Program program = programRepository.findById(programId).orElseThrow(() -> new ResourceNotFoundException("Program not found"));
         User user = userRepository.findByUsername(username);
 
-        program.getParticipants().add(user);  // Add user to participants set
-        return programRepository.save(program);  // Save the program with updated participants
+        program.getParticipants().add(user);
+        return programRepository.save(program);
     }
 }

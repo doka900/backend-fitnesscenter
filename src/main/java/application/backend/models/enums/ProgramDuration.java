@@ -1,9 +1,9 @@
 package application.backend.models.enums;
 
 public enum ProgramDuration {
-    FOUR_WEEKS(4),
-    EIGHT_WEEKS(8),
-    TWELVE_WEEKS(12);
+    ČETIRI_NEDELJE(4),
+    OSAM_NEDELJA(8),
+    DVANAEST_NEDELJA(12);
 
     private final int weeks;
 

@@ -51,11 +51,10 @@ public class ProgramController {
         User user = userService.findByUsername(username);
 
         if (program.getParticipants().contains(user)) {
-            // Return a specific message indicating that the user is already in the program
             return ResponseEntity.status(HttpStatus.CONFLICT).body("User is already part of this program.");
         }
 
-        // Add user to program and save
+
         program.getParticipants().add(user);
         programService.addProgramToUser(program.getId(), user.getUsername());
 

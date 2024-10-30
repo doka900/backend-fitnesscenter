@@ -17,6 +17,8 @@ public class FacilityDTO {
 
     private Long id;
 
+    private String name;
+
     private Company company;
 
     private String country;

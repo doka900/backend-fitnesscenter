@@ -16,8 +16,8 @@ public class EmailServiceImpl implements EmailService {
     public void sendVerificationEmail(String email, String verificationUrl) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(email);
-        message.setSubject("Email Verification");
-        message.setText("Click the following link to verify your email: " + verificationUrl);
+        message.setSubject("Email Verifikacija");
+        message.setText("Pritisnite sledeći email da potvrdite registraciju: " + verificationUrl);
         javaMailSender.send(message);
     }
 }

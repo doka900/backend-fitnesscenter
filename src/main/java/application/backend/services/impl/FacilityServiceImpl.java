@@ -29,6 +29,7 @@ public class FacilityServiceImpl implements FacilityService {
     public Facility createFacility(FacilityDTO facilityDTO) {
         Facility facility = new Facility();
 
+        facility.setName(facilityDTO.getName());
         facility.setCompany(companyRepository.findCompanyById(1L));
         facility.setCountry(facilityDTO.getCountry());
         facility.setCity(facilityDTO.getCity());
@@ -50,6 +51,10 @@ public class FacilityServiceImpl implements FacilityService {
 
         System.out.println("Facility to update: " + updatedFacility);
 
+
+        if (facilityDTO.getName() != null) {
+            updatedFacility.setName(facilityDTO.getName());
+        }
         if (facilityDTO.getCompany() != null) {
             updatedFacility.setCompany(facilityDTO.getCompany());
         }
@@ -83,6 +88,7 @@ public class FacilityServiceImpl implements FacilityService {
 
         facilityRepository.updateFacility(
 
+                updatedFacility.getName(),
                 updatedFacility.getCountry(),
                 updatedFacility.getCity(),
                 updatedFacility.getZipCode(),

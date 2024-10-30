@@ -29,6 +29,9 @@ public class Facility {
     @JoinColumn(name = "company_id", nullable = false)
     private Company company;
 
+    @Column(name = "name")
+    private String name;
+
     @Column(name = "country")
     private String country;
 
